@@ -5,28 +5,47 @@ import Parser.parse
 import ast._
 import Lab3._
 
-
 class Lab3StudentSpec extends AnyFlatSpec {
 
+  // Test 1: Higher-Order Function
   "StudentSpec" should "evaluate a higher order function" in {
-    val jsyStr : String = ???
-    val answer : Either[DynamicTypeError, Expr] = Right(???)
+    // JavaScripty code for higher-order function
+    val jsyStr: String = """
+      const applyTwice = function(f) { return function(x) { return f(f(x)); }; };
+      const addOne = function(x) { return x + 1; };
+      applyTwice(addOne)(3);
+    """
+    val answer: Either[DynamicTypeError, Expr] = Right(N(5)) // applyTwice(addOne)(3) should return 5
     assert(answer === iterateStep(parse(jsyStr)))
   }
 
-  it should "evaluate a recursive function" in {
-    val jsyStr : String = ???
-    val answer : Either[DynamicTypeError, Expr] = Right(???)
+  // Test 2: Recursive Function
+  it should "evaluate a recursive factorial function" in {
+    val jsyStr: String =
+      """
+        const fact = function f(x) {
+          if (x === 0) 1 else x * f(x - 1)
+        };
+       fact(5);
+      """
+    val answer: Either[DynamicTypeError, Expr] = Right(N(120))
     assert(answer === iterateStep(parse(jsyStr)))
-  }  
-  
-  it should "evaluate your test case" in {
-    val jsyStr : String = ???
-    val answer : Either[DynamicTypeError, Expr] = Right(???)
-    assert(answer === iterateStep(parse(jsyStr)))
-  }
-
 }
+
+
+  // Test 3: Square Function
+  it should "evaluate your test case" in {
+    // JavaScripty code for the square function
+    val jsyStr: String = """
+      const square = function(x) { return x * x; };
+      square(5);
+    """
+    val answer: Either[DynamicTypeError, Expr] = Right(N(25)) // square(5) should return 25
+    assert(answer === iterateStep(parse(jsyStr)))
+  }
+}
+
+
 
 class Lab3Spec extends AnyFlatSpec {
 
